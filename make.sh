@@ -4,10 +4,10 @@ URL="$1"              # 移植包下载地址
 GITHUB_ENV="$2"       # 输出环境变量
 GITHUB_WORKSPACE="$3" # 工作目录
 
-device=fuxi # 设备代号
+device=peridot # 设备代号
 
-zip_name=$(echo ${URL} | cut -d"/" -f5)        #包名，例：miui_FUXI_OS1.0.24.3.18.DEV_e208767273_14.0.zip
-os_version=$(echo ${URL} | cut -d"/" -f4)      #版本号，例：OS1.0.24.3.18.DEV  
+zip_name=$(echo ${URL} | cut -d"/" -f5)        #包名，例：miui_PERIDOT_OS1.0.13.0.UNPCNXM_713afcfba9_14.0.zip
+os_version=$(echo ${URL} | cut -d"/" -f4)      #版本号，例：OS1.0.13.0.UNPCNXM  
 android_version=$(echo ${URL} | cut -d"_" -f5 | cut -d"." -f1) # Android 版本号, 例: 14
 build_time=$(date) && build_utc=$(date -d "$build_time" +%s)   # 构建时间
 
@@ -158,9 +158,13 @@ $ksud boot-patch -b "$GITHUB_WORKSPACE"/init_boot/init_boot.img --magiskboot $ma
 mv -f "$GITHUB_WORKSPACE"/init_boot/kernelsu_boot*.img "$GITHUB_WORKSPACE"/"${device}"/firmware-update/init_boot-kernelsu.img
 rm -rf "$GITHUB_WORKSPACE"/init_boot
 
+# Replace Replace system framework.jar
+echo -e "${Red}- Replace system services.jar"
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/framework.zip -d "$GITHUB_WORKSPACE"/images/system/framework
+
 # Replace Replace system services.jar
 echo -e "${Red}- Replace system services.jar"
-sudo cp -f "$GITHUB_WORKSPACE"/"${device}"_files/services.jar "$GITHUB_WORKSPACE"/images/system/framework
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/services.zip -d "$GITHUB_WORKSPACE"/images/system/framework
 
 # Replace Replace system_ext miui-services.jar
 echo -e "${Red}- Replace system_ext miui-services.jar"
@@ -337,7 +341,7 @@ echo -e "${Red}- 定制 ROM 包名"
 md5=$(md5sum "$GITHUB_WORKSPACE"/zip/miui_${device}_${os_version}.zip)
 echo "MD5=${md5:0:32}" >>$GITHUB_ENV
 zip_md5=${md5:0:10}
-rom_name="miui_FUXI_${os_version}_${zip_md5}_${android_version}.0_Prume.zip"
+rom_name="miui_peridot_${os_version}_${zip_md5}_${android_version}.0_Prume.zip"
 sudo mv "$GITHUB_WORKSPACE"/zip/miui_${device}_${os_version}.zip "$GITHUB_WORKSPACE"/zip/"${rom_name}"
 echo "rom_name=$rom_name" >>$GITHUB_ENV
 ### 输出卡刷包结束
