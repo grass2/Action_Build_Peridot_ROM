@@ -1,17 +1,17 @@
-﻿name: Build ROM for Peridot
+name: Build ROM for Peridot
 on:
   workflow_dispatch:
     inputs:
       URL:
         description: "Official package download address"
         required: true
-        default: 'https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS1.0.13.0.UNPCNXM/miui_PERIDOT_OS1.0.13.0.UNPCNXM_713afcfba9_14.0.zip?t=1716207974&s=9bb0f00a5a1db0fdc56b11523074506c'
+        default: 'https://cdnorg.d.miui.com/OS1.0.13.0.UNPCNXM/miui_PERIDOT_OS1.0.13.0.UNPCNXM_713afcfba9_14.0.zip?t=1716179904&s=04353b6d850aa3d5c3e8985b38b572ec'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 最大化构建环境
+      - name: Maximizing the build environment
         uses: easimon/maximize-build-space@master
         with:
           swap-size-mb: 8192
@@ -20,12 +20,17 @@ jobs:
           remove-dotnet: 'true'
           remove-android: 'true'
           remove-haskell: 'true'
-      - name: 检出仓库文件
+      - name: Check out repository files
         uses: actions/checkout@main
-      - name: 构建 ROM
+      - name: Set Git user info
+        run: |
+          git config user.email "cuongdieu@gmail.com"
+          git config user.name "grass2"
+        shell: bash
+      - name: Building ROM
         run: |
           sudo bash "$GITHUB_WORKSPACE"/make.sh ${{ github.event.inputs.URL }} $GITHUB_ENV $GITHUB_WORKSPACE
-      - name: 处理 ROM
+      - name: Processing ROM
         run: |
           mkdir -p "$GITHUB_WORKSPACE"/GithubRelease
           cd "$GITHUB_WORKSPACE"/GithubRelease
