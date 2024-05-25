@@ -22,11 +22,6 @@ jobs:
           remove-haskell: 'true'
       - name: Check out repository files
         uses: actions/checkout@main
-      - name: Set Git user info
-        run: |
-          git config user.email "cuongdieu@gmail.com"
-          git config user.name "grass2"
-        shell: bash
       - name: Building ROM
         run: |
           sudo bash "$GITHUB_WORKSPACE"/make.sh ${{ github.event.inputs.URL }} $GITHUB_ENV $GITHUB_WORKSPACE
