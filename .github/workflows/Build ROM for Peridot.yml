@@ -1,9 +1,9 @@
-﻿name: Build ROM for Fuxi
+﻿name: Build ROM for Peridot
 on:
   workflow_dispatch:
     inputs:
       URL:
-        description: "官方包下载地址"
+        description: "Official zip Rom package download address"
         required: true
         default: 'https://bn.d.miui.com/OS1.0.13.0.UNPCNXM/miui_PERIDOT_OS1.0.13.0.UNPCNXM_713afcfba9_14.0.zip'
 
