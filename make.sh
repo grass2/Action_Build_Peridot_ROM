@@ -304,7 +304,7 @@ End_Time 功能修复
 ### 功能修复结束
 
 ### 生成 super.img
-echo -e "${Red}- 开始打包super.img"
+echo -e "${Red}- Start Packaging super.img"
 Start_Time
 partitions=("mi_ext" "odm" "product" "system" "system_ext" "system_dlkm" "vendor" "vendor_dlkm")
 for partition in "${partitions[@]}"; do
@@ -331,17 +331,17 @@ sudo find "$GITHUB_WORKSPACE"/images/ -exec touch -t 200901010000.00 {} \;
 zstd -12 -f "$GITHUB_WORKSPACE"/images/super.img -o "$GITHUB_WORKSPACE"/images/super.zst --rm
 End_Time 压缩super.zst
 # 生成卡刷包
-echo -e "${Red}- 生成卡刷包"
+echo -e "${Red}-Generate card flash package"
 Start_Time
 sudo $a7z a "$GITHUB_WORKSPACE"/zip/miui_${device}_${os_version}.zip "$GITHUB_WORKSPACE"/images/* >/dev/null
 sudo rm -rf "$GITHUB_WORKSPACE"/images
 End_Time 压缩卡刷包
-# 定制 ROM 包名
-echo -e "${Red}- 定制 ROM 包名"
+# Custom ROM package name
+echo -e "${Red}- Custom ROM package name"
 md5=$(md5sum "$GITHUB_WORKSPACE"/zip/miui_${device}_${os_version}.zip)
 echo "MD5=${md5:0:32}" >>$GITHUB_ENV
 zip_md5=${md5:0:10}
-rom_name="miui_peridot_${os_version}_${zip_md5}_${android_version}.0_Prume.zip"
+rom_name="miui_peridot_${os_version}_${zip_md5}_${android_version}.0_grass2.zip"
 sudo mv "$GITHUB_WORKSPACE"/zip/miui_${device}_${os_version}.zip "$GITHUB_WORKSPACE"/zip/"${rom_name}"
 echo "rom_name=$rom_name" >>$GITHUB_ENV
 ### 输出卡刷包结束
