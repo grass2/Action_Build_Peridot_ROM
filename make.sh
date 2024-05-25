@@ -175,9 +175,9 @@ sudo cp -f "$GITHUB_WORKSPACE"/"${device}"_files/miui-services.jar "$GITHUB_WORK
 # sudo cp -f "$GITHUB_WORKSPACE"/"${device}"_files/fstab.qcom "$GITHUB_WORKSPACE"/"${device}"/vendor/etc/fstab.qcom
 
 # add product's overlay vietnamese
-echo -e "${Red}- add product's overlay vietnamese"
+#echo -e "${Red}- add product's overlay vietnamese"
 #sudo rm -rf "$GITHUB_WORKSPACE"/images/product/overlay/*
-sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/overlay.zip -d "$GITHUB_WORKSPACE"/images/product/overlay
+#sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/overlay.zip -d "$GITHUB_WORKSPACE"/images/product/overlay
 #
 # 修复精准电量 (亮屏可用时长)
 #echo -e "${Red}- 修复精准电量 (亮屏可用时长)"
