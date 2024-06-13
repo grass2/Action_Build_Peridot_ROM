@@ -1,11 +1,11 @@
-﻿name: Build CN ROM for Peridot
+﻿name: Build Global ROM for Peridot
 on:
   workflow_dispatch:
     inputs:
       URL:
         description: "Official zip Rom package download address"
         required: true
-        default: 'https://bn.d.miui.com/OS1.0.13.0.UNPCNXM/miui_PERIDOT_OS1.0.13.0.UNPCNXM_713afcfba9_14.0.zip'
+        default: 'https://bn.d.miui.com/OS1.0.2.0.UNPTWXM/miui_PERIDOTTWGlobal_OS1.0.2.0.UNPTWXM_accb51eab8_14.0.zip'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@main
       - name:  Construct Rom
         run: |
-          sudo bash "$GITHUB_WORKSPACE"/makeCN.sh ${{ github.event.inputs.URL }} $GITHUB_ENV $GITHUB_WORKSPACE
+          sudo bash "$GITHUB_WORKSPACE"/makeGl.sh ${{ github.event.inputs.URL }} $GITHUB_ENV $GITHUB_WORKSPACE
       - name: 处理 ROM
         run: |
           User="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
